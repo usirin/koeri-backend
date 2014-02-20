@@ -16,7 +16,7 @@ Fetcher.FETCH_INTERVAL = 60 * 1000; // a minute
 Fetcher.fetch = function() {
     request('http://www.koeri.boun.edu.tr/scripts/lst6.asp', function(err, resp, body){
         if (err) {
-            opt_errorCallback && opt_errorCallback();
+            console.log('Fetching error -', new Date(), err);
             return;
         }
 
