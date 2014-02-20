@@ -3,7 +3,10 @@ var express = require('express'),
     user = require('./routes/user'), 
     http = require('http'), 
     path = require('path'),
-    EarthquakeModel = require('./earthquake/Model');
+    request = require('request'),
+    db = require('./db'),
+    Earthquake = require('./Earthquake'),
+    Fetcher = require('./Fetcher');
 
 var app = express();
 
@@ -24,7 +27,14 @@ app.configure('development', function(){
 });
 
 app.get('/', function(req, res) {
-    EarthquakeModel.fetch(function(data) {
+    res.json({});
+});
+
+app.get('/latest', function(req, res) {
+    Earthquake.find({}).limit(100).sort('-timestamp').exec(function(err, data) {
+        if (err)
+            res.send(500);
+
         res.json(data);
     });
 });
